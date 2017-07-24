@@ -1,0 +1,107 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!!
+  </h1>
+</div>
+
+<form (submit)="getSetData()">
+  <input type="text" name="setId" [(ngModel)]="setId" value="7650196">
+
+  <input type='submit' value='Get the set data!'>
+</form>
+<div *ngIf='isDataAvailable'>
+<div style='display:inline-block; width: 30%; height: 300px;'>
+  <canvas baseChart
+    [data]="doughnutChartData"
+    [labels]='doughnutChartLabels'
+    [chartType]='doughtnutChartType'
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"></canvas>
+
+</div>
+
+
+  <div style="display: inline-block; width: 60%; height: 300px;">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>
+
+<h4>Stats for {{p1Tag}}
+  Avg Neutral Wins Needed For Kill: {{ p1Punishes.length / p1Kills }}
+  # of punishes: {{ p1Punishes.length }}
+  Total Damage: {{ p1Damage }}
+  Number of Hits: {{ p1Hits }}
+  Average Damage Per Punish: {{ p1Damage / p1Punishes.length }}
+  Average # of Hits Per Punish: {{ p1Hits / p1Punishes.length }}
+  Average Length(Time) Per Punish: {{ p1Frames / p1Punishes.length }}
+
+
+
+</h4>
+
+<h4>Stats for {{p2Tag}}:
+  Avg Neutral Wins Needed For Kill: {{ p2Punishes.length / p2Kills }}
+  # of punishes: {{ p2Punishes.length }}
+  Total Damage: {{ p2Damage }}
+  Number of Hits: {{ p2Hits }}
+  Average Damage Per Punish: {{ p2Damage / p2Punishes.length }}
+  Average # of Hits Per Punish: {{ p2Hits / p2Punishes.length }}
+  Average Length(Time) Per Punish: {{ p2Frames / p2Punishes.length }}
+</h4>
+  
+<h3>{{p1Tag}}</h3>
+<table>
+  <tr>
+    <th>Game ID</th>
+    <th>Damage</th>
+    <th>Hits</th>
+    <th>Killing Blow?</th>
+    <th>Time (Frames)</th>
+    <th>Combo Begin</th>
+    <th>Combo End</th>
+  </tr>
+
+  <tr *ngFor='let punish of p1Punishes'>
+    <td>{{punish.gameId}}</td>
+    <td>{{punish.damage | number: '1.2-2'}}</td>
+    <td>{{punish.hits}}</td>
+    <td>{{punish.isKill}}</td>
+    <td>{{punish.time}}</td>
+    <td>{{punish.frameStart}}</td>
+    <td>{{punish.frameEnd}}</td>
+  </tr>
+</table>
+
+<h3>{{p2Tag}}</h3>
+<table>
+  <tr>
+    <th>Game ID</th>
+    <th>Damage Dealt</th>
+    <th>Hits</th>
+    <th>Killing Blow?</th>
+    <th>Time (Frames)</th>
+    <th>Combo Begin</th>
+    <th>Combo End</th>
+  </tr>
+
+  <tr *ngFor='let punish of p2Punishes'>
+    <td>{{punish.gameId}}</td>
+    <td>{{punish.damage | number: '1.2-2'}}</td>
+    <td>{{punish.hits}}</td>
+    <td>{{punish.isKill}}</td>
+    <td>{{punish.time}}</td>
+    <td>{{punish.frameStart}}</td>
+    <td>{{punish.frameEnd}}</td>
+  </tr>
+</table>
+
+
+<!-- {{ setData | json }} -->
